@@ -42,9 +42,12 @@ module.exports = async function handler(req, res) {
 
     // ── Send email via Resend ──────────────────────────────────────────────
     try {
-        const resend = new Resend(process.env.RESEND_API_KEY);
+        const apiKey = process.env.RESEND_API_KEY;
+        console.log('[Resend] API key present:', !!apiKey, '| length:', apiKey ? apiKey.length : 0);
 
-        await resend.emails.send({
+        const resend = new Resend(apiKey);
+
+        const { data, error: resendError } = await resend.emails.send({
             from:     'Gorgoy Homes <onboarding@resend.dev>',
             to:       [REALTOR_EMAIL],
             cc:       [OWNER_EMAIL],
@@ -97,9 +100,16 @@ module.exports = async function handler(req, res) {
                 </div>
             `,
         });
+
+        console.log('[Resend] data:', JSON.stringify(data));
+        console.log('[Resend] error:', JSON.stringify(resendError));
+
+        if (resendError) {
+            return res.status(500).json({ error: 'Email delivery failed', detail: resendError });
+        }
     } catch (err) {
-        console.error('[Resend]', err.message);
-        return res.status(500).json({ error: 'Email delivery failed' });
+        console.error('[Resend] exception:', err.message);
+        return res.status(500).json({ error: 'Email delivery failed', detail: err.message });
     }
 
     return res.status(200).json({ success: true });
