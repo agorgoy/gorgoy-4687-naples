@@ -335,6 +335,32 @@
 
         .g-item:hover .g-overlay { background: rgba(0,0,0,0.2); }
 
+        /* ── VIDEO TOUR ── */
+        .video-wrap {
+            background: var(--black);
+            padding: 90px 48px;
+            text-align: center;
+        }
+
+        .video-wrap .eyebrow { color: var(--gold); }
+        .video-wrap .section-h { color: var(--white); margin-bottom: 44px; }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
         /* ── FEATURES ── */
         .features-wrap {
             background: var(--black);
@@ -677,6 +703,7 @@
         <p class="hero-price">$529,900</p>
         <div class="hero-btns">
             <a href="#contact" class="btn-gold">Schedule a Showing</a>
+            <a href="#tour" class="btn-outline">Virtual Tour</a>
             <a href="#gallery" class="btn-outline">View Photos</a>
         </div>
     </div>
@@ -769,6 +796,21 @@
         </div>
     </div>
 </div>
+
+<!-- VIDEO TOUR -->
+<section class="video-wrap" id="tour">
+    <p class="eyebrow">Virtual Tour</p>
+    <h2 class="section-h">Walk Through Every Room</h2>
+    <div class="video-container">
+        <iframe
+            src="https://www.youtube.com/embed/0NPiLWvbcrE"
+            title="Virtual Tour — 4687 14th Ave SE, Naples FL"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            loading="lazy">
+        </iframe>
+    </div>
+</section>
 
 <!-- FEATURES -->
 <section class="section features-wrap">
