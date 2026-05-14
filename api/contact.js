@@ -1,8 +1,9 @@
 const { createClient } = require('@supabase/supabase-js');
-const { Resend } = require('resend');
+const nodemailer = require('nodemailer');
 
 const REALTOR_EMAIL = 'daylet.realtor@gmail.com';
 const OWNER_EMAIL   = 'gorgoyhomes@gmail.com';
+const SENDER_EMAIL  = 'realtor@gorgoyhomes.com';
 const PROPERTY_ADDR = '4687 14th Ave SE, Naples, FL 34117';
 
 module.exports = async function handler(req, res) {
@@ -40,18 +41,21 @@ module.exports = async function handler(req, res) {
         console.error('[Supabase init]', err.message);
     }
 
-    // ── Send email via Resend ──────────────────────────────────────────────
+    // ── Send email via Gmail SMTP ──────────────────────────────────────────
     try {
-        const apiKey = process.env.RESEND_API_KEY;
-        console.log('[Resend] API key present:', !!apiKey, '| length:', apiKey ? apiKey.length : 0);
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: SENDER_EMAIL,
+                pass: process.env.GMAIL_APP_PASSWORD,
+            },
+        });
 
-        const resend = new Resend(apiKey);
-
-        const { data, error: resendError } = await resend.emails.send({
-            from:     'Gorgoy Homes <onboarding@resend.dev>',
-            to:       [REALTOR_EMAIL],
-            cc:       [OWNER_EMAIL],
-            reply_to: email,
+        await transporter.sendMail({
+            from:     `"Gorgoy Homes" <${SENDER_EMAIL}>`,
+            to:       REALTOR_EMAIL,
+            cc:       OWNER_EMAIL,
+            replyTo:  email,
             subject:  `New Showing Request — ${PROPERTY_ADDR}`,
             html: `
                 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
@@ -100,15 +104,8 @@ module.exports = async function handler(req, res) {
                 </div>
             `,
         });
-
-        console.log('[Resend] data:', JSON.stringify(data));
-        console.log('[Resend] error:', JSON.stringify(resendError));
-
-        if (resendError) {
-            return res.status(500).json({ error: 'Email delivery failed', detail: resendError });
-        }
     } catch (err) {
-        console.error('[Resend] exception:', err.message);
+        console.error('[Gmail]', err.message);
         return res.status(500).json({ error: 'Email delivery failed', detail: err.message });
     }
 
