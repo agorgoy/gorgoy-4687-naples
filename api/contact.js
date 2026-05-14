@@ -51,6 +51,7 @@ module.exports = async function handler(req, res) {
             },
         });
 
+        // Email to realtor + owner
         await transporter.sendMail({
             from:     `"Gorgoy Homes" <${SENDER_EMAIL}>`,
             to:       REALTOR_EMAIL,
@@ -99,6 +100,50 @@ module.exports = async function handler(req, res) {
                     <div style="padding:16px 32px;background:#f6f6f4;text-align:center">
                         <p style="margin:0;font-size:11px;color:#aaa">
                             Gorgoy Homes Inc &bull; Naples, Florida &bull; gorgoyhomes@gmail.com
+                        </p>
+                    </div>
+                </div>
+            `,
+        });
+        // Confirmation email to prospect
+        await transporter.sendMail({
+            from:    `"Florida Realty Of Miami" <${SENDER_EMAIL}>`,
+            to:      email,
+            subject: `We received your inquiry — ${PROPERTY_ADDR}`,
+            html: `
+                <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto">
+                    <div style="background:#111;padding:24px 32px">
+                        <p style="color:#c8a96e;font-size:12px;letter-spacing:4px;text-transform:uppercase;margin:0">
+                            Florida Realty Of Miami
+                        </p>
+                    </div>
+                    <div style="padding:32px;border:1px solid #e8e8e8;border-top:none">
+                        <h2 style="color:#111;font-size:20px;margin:0 0 16px">
+                            Thank you, ${firstName}!
+                        </h2>
+                        <p style="color:#444;line-height:1.7;margin:0 0 24px">
+                            We received your inquiry for <strong>${PROPERTY_ADDR}</strong>.
+                            Our agent will be in touch with you shortly to schedule a showing.
+                        </p>
+                        <div style="background:#f6f6f4;border-left:3px solid #c8a96e;padding:20px 24px;margin-bottom:24px">
+                            <p style="margin:0 0 4px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px">Property</p>
+                            <p style="margin:0 0 16px;font-weight:600;color:#111">${PROPERTY_ADDR}</p>
+                            <p style="margin:0 0 4px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px">Price</p>
+                            <p style="margin:0 0 16px;font-weight:600;color:#c8a96e">$529,900</p>
+                            <p style="margin:0 0 4px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px">Your Agent</p>
+                            <p style="margin:0;font-weight:600;color:#111">Daylet Casanova</p>
+                            <p style="margin:4px 0 0;font-size:13px;color:#555">
+                                <a href="mailto:${REALTOR_EMAIL}" style="color:#c8a96e">${REALTOR_EMAIL}</a>
+                                &nbsp;&bull;&nbsp; +1 (786) 602-2272
+                            </p>
+                        </div>
+                        <p style="color:#888;font-size:12px;margin:0">
+                            If you have any immediate questions, feel free to reply to this email or call us directly.
+                        </p>
+                    </div>
+                    <div style="padding:16px 32px;background:#f6f6f4;text-align:center">
+                        <p style="margin:0;font-size:11px;color:#aaa">
+                            Florida Realty Of Miami &bull; Naples, Florida
                         </p>
                     </div>
                 </div>
