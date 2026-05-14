@@ -131,7 +131,7 @@ module.exports = async function handler(req, res) {
                             <p style="margin:0 0 4px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px">Price</p>
                             <p style="margin:0 0 16px;font-weight:600;color:#c8a96e">$529,900</p>
                             <p style="margin:0 0 4px;font-size:13px;color:#888;text-transform:uppercase;letter-spacing:1px">Your Agent</p>
-                            <p style="margin:0;font-weight:600;color:#111">Daylet Casanova</p>
+                            <p style="margin:0;font-weight:600;color:#111">Daylet Herrera</p>
                             <p style="margin:4px 0 0;font-size:13px;color:#555">
                                 <a href="mailto:${REALTOR_EMAIL}" style="color:#c8a96e">${REALTOR_EMAIL}</a>
                                 &nbsp;&bull;&nbsp; +1 (786) 602-2272
