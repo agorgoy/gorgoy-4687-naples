@@ -1,0 +1,14 @@
+{
+  "name": "gorgoy-4687",
+  "version": "1.0.0",
+  "description": "Property landing page — 4687 14th Ave SE, Naples FL",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "resend": "^4.0.0"
+  }
+}
